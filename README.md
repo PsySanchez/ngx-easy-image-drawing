@@ -1,5 +1,8 @@
 ## ngx-easy-image-drawing
 
+```markdown
+![Image description](https://github.com/PsySanchez/ngx-easy-image-drawing/blob/master/chess.png)
+```
 Angular library for easy image drawing on a canvas
 
 This library provides a simple and efficient way to allow users to draw on images within your Angular applications.
