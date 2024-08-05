@@ -1,0 +1,21 @@
+<div class="canvas-wrapper">
+  <canvas id="canvas" #drawingCanvas></canvas>
+</div>
+<div class="image-button-wrapper">
+  <button
+    type="button"
+    (click)="save()"
+    class="button save"
+    [style.background-color]="saveButtonColor"
+  >
+    Save
+  </button>
+  <button
+    type="button"
+    (click)="clear()"
+    class="button undo"
+    [style.background-color]="undoButtonColor"
+  >
+    Undo
+  </button>
+</div>
