@@ -1,8 +1,7 @@
 ## ngx-easy-image-drawing
 
-```markdown
-<img src="https://github.com/your-username/your-repository/raw/main/assets/example-image.png"/>
-```
+![Example Image](https://github.com/your-username/your-repository/raw/main/assets/example-image.png)
+
 Angular library for easy image drawing on a canvas
 
 This library provides a simple and efficient way to allow users to draw on images within your Angular applications.
