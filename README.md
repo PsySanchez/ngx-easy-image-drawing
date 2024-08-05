@@ -1,6 +1,6 @@
 ## ngx-easy-image-drawing
 
-![Example Image](https://github.com/your-username/your-repository/raw/main/assets/example-image.png)
+![Example Image](https://github.com/PsySanchez/ngx-easy-image-drawing/blob/master/chess.png)
 
 Angular library for easy image drawing on a canvas
 
