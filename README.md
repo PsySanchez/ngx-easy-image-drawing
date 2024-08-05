@@ -1,7 +1,7 @@
 ## ngx-easy-image-drawing
 
 ```markdown
-![Image description](https://github.com/PsySanchez/ngx-easy-image-drawing/blob/master/chess.png)
+<img src="https://github.com/your-username/your-repository/raw/main/assets/example-image.png"/>
 ```
 Angular library for easy image drawing on a canvas
 
