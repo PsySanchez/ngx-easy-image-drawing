@@ -32,29 +32,32 @@ export class AppModule {}
   [height]="canvasHeight"
   [width]="canvasWidth"
   [src]="uploadImageFilePreview"
-  forceSizeExport="true" outputMimeType="uploadImageFile.type" outputQuality="1" (savedImage)="handleSavedImage($event)">
+  (savedImage)="handleSavedImage($event)"
+>
 </easy-image-drawing>
 ```
 
 ## Options
 
 ```markdown
-| Option           | Type                 | Description                                                                                       |
-| ---------------- | -------------------- | ------------------------------------------------------------------------------------------------- |
-| height           | number               | The height of the canvas in pixels.                                                               |
-| width            | number               | The width of the canvas in pixels.                                                                |
-| src              | string               | The image source URL.                                                                             |
-| saveButtonColor  | string               | The backbackground color for save button (optional parameter).                                    |
-| undoButtonColor  | string               | The backbackground color for save button (optional parameter).                                    |
-| forceSizeExport  | boolean              | Whether to force the exported image size to match the canvas size (in the pipeline).              |
-| outputMimeType   | string               | The MIME type of the exported image (e.g., 'image/jpeg', 'image/png') (in the pipeline).          |
-| outputQuality    | number               | The quality of the exported image (0-1) (in the pipeline).                                        |
-| savedImage       | EventEmitter<string> | An event emitted when the image is saved. The event payload is a data URL representing the image. |
+| Option          | Type                 | Description                                                                                       |
+| --------------- | -------------------- | ------------------------------------------------------------------------------------------------- |
+| height          | number               | The height of the canvas in pixels.                                                               |
+| width           | number               | The width of the canvas in pixels.                                                                |
+| lineWidth       | number               | The width of the line drawing (optional parameter).                                               |
+| src             | string               | The image source URL.                                                                             |
+| saveButtonColor | string               | The backbackground color for save button (optional parameter).                                    |
+| undoButtonColor | string               | The backbackground color for save button (optional parameter).                                    |
+| forceSizeExport | boolean              | Whether to force the exported image size to match the canvas size (in the pipeline).              |
+| outputMimeType  | string               | The MIME type of the exported image (e.g., 'image/jpeg', 'image/png') (in the pipeline).          |
+| outputQuality   | number               | The quality of the exported image (0-1) (in the pipeline).                                        |
+| savedImage      | EventEmitter<string> | An event emitted when the image is saved. The event payload is a data URL representing the image. |
 ```
 
 ## Example
 
 app.component.ts
+
 ```typescript
 import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
@@ -94,7 +97,9 @@ export class AppComponent {
   }
 }
 ```
+
 app.component.html
+
 ```html
 <!-- input image -->
 <input type="file" (change)="onFileChange($event)" />
@@ -108,9 +113,6 @@ app.component.html
   [src]="uploadImageFilePreview"
   saveButtonColor="#4caf50"
   undoButtonColor="#f44336"
-  forceSizeExport="true"
-  outputMimeType="uploadImageFile.type"
-  outputQuality="1"
   (savedImage)="handleSavedImage($event)"
 >
 </easy-image-drawing>
