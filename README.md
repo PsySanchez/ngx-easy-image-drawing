@@ -2,7 +2,7 @@
 
 ![Example Image](https://github.com/PsySanchez/ngx-easy-image-drawing/blob/master/chess.png)
 
-Angular library for easy image drawing on a canvas
+Angular library for easy image drawing on a canvas.
 
 This library provides a simple and efficient way to allow users to draw on images within your Angular applications.
 
@@ -45,13 +45,14 @@ export class AppModule {}
 | height          | number               | The height of the canvas in pixels.                                                               |
 | width           | number               | The width of the canvas in pixels.                                                                |
 | lineWidth       | number               | The width of the line drawing (optional parameter).                                               |
+| lineColor       | string               | The color of the line drawing (optional parameter).                                               |
 | src             | string               | The image source URL.                                                                             |
 | saveButtonColor | string               | The backbackground color for save button (optional parameter).                                    |
 | undoButtonColor | string               | The backbackground color for save button (optional parameter).                                    |
 | forceSizeExport | boolean              | Whether to force the exported image size to match the canvas size (in the pipeline).              |
 | outputMimeType  | string               | The MIME type of the exported image (e.g., 'image/jpeg', 'image/png') (in the pipeline).          |
 | outputQuality   | number               | The quality of the exported image (0-1) (in the pipeline).                                        |
-| savedImage      | EventEmitter<string> | An event emitted when the image is saved. The event payload is a data URL representing the image. |
+| savedImage      | EventEmitter<File>   | An event emitted when the image is saved. The event payload is a data URL representing the image. |
 ```
 
 ## Example

@@ -38,6 +38,10 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
   private _mousemove: any = null;
   private _mouseup: any = null;
 
+  private _touchstart: any = null;
+  private _touchmove: any = null;
+  private _touchend: any = null;
+
   ngOnChanges(): void {
     this._setCanvas();
   }
@@ -45,6 +49,7 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this._setCanvas();
     this._setMouseEvents();
+    this._setMouseEventsMobile();
   }
 
   public save(): void {
@@ -73,21 +78,24 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
     return new Blob([ab], { type: mimeString });
   }
 
-  private _drawLine(event: MouseEvent): void {
-    const currentPosition = this.getMousePosition(event);
+  private _drawLine(event: any): void {
+    const currentPosition = this.getPosition(event.clientX, event.clientY);
     this.context.moveTo(this.previousPosition.x, this.previousPosition.y);
     this.context.lineTo(currentPosition.x, currentPosition.y);
     this.previousPosition = currentPosition;
     this.context.stroke();
   }
 
-  private getMousePosition(event: MouseEvent): { x: number; y: number } {
+  private getPosition(
+    clientX: number,
+    clientY: number
+  ): { x: number; y: number } {
     const rect = this.canvas.nativeElement.getBoundingClientRect();
     const scaleX = this.canvas.nativeElement.width / rect.width;
     const scaleY = this.canvas.nativeElement.height / rect.height;
     return {
-      x: (event.clientX - rect.left) * scaleX,
-      y: (event.clientY - rect.top) * scaleY,
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY,
     };
   }
 
@@ -116,12 +124,11 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
       (event: MouseEvent) => {
         this.activePath = true;
         this.context.beginPath();
-        this.previousPosition = this.getMousePosition(event);
+        this.previousPosition = this.getPosition(event.clientX, event.clientY);
       }
     );
 
     this._mousemove = window.addEventListener("mousemove", (event) => {
-      event.preventDefault();
       if (this.activePath) {
         this._drawLine(event);
       }
@@ -135,9 +142,43 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  private _setMouseEventsMobile(): void {
+    this._touchstart = window.addEventListener(
+      "touchstart",
+      (event: TouchEvent) => {
+        this.activePath = true;
+        this.context.beginPath();
+        this.previousPosition = this.getPosition(
+          event.touches[0].clientX,
+          event.touches[0].clientY
+        );
+      }
+    );
+
+    this._touchmove = window.addEventListener("touchmove", (event) => {
+      if (this.activePath) {
+        this._drawLine(event.touches[0]);
+      }
+    });
+
+    this._touchend = window.addEventListener("touchend", () => {
+      if (this.activePath) {
+        this.context.closePath();
+        this.activePath = false;
+      }
+    });
+  }
+
+  private _removeEventListeners(): void {
     window.removeEventListener("mousedown", this._mousedown);
     window.removeEventListener("mousemove", this._mousemove);
     window.removeEventListener("mouseup", this._mouseup);
+    window.removeEventListener("touchstart", this._touchstart);
+    window.removeEventListener("touchmove", this._touchmove);
+    window.removeEventListener("touchend", this._touchend);
+  }
+
+  ngOnDestroy(): void {
+    this._removeEventListeners();
   }
 }
