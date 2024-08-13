@@ -1,0 +1,46 @@
+@media only screen and (max-width: 900px) {
+  :host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.image-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 0 10px 10px 0;
+}
+
+#canvas {
+  border: 1px solid #ccc;
+  cursor: crosshair;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.canvas-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+button {
+  margin: 1rem;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}/*# sourceMappingURL=easy-image-drawing.component.css.map */
