@@ -1,6 +1,6 @@
 {
   "name": "ngx-easy-image-drawing",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "author": "Alex Voronin <alex.varonin@gmail.com>",
   "license": "MIT",
   "peerDependencies": {

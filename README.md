@@ -40,19 +40,20 @@ export class AppModule {}
 ## Options
 
 ```markdown
-| Option          | Type                 | Description                                                                                       |
-| --------------- | -------------------- | ------------------------------------------------------------------------------------------------- |
-| height          | number               | The height of the canvas in pixels.                                                               |
-| width           | number               | The width of the canvas in pixels.                                                                |
-| lineWidth       | number               | The width of the line drawing (optional parameter).                                               |
-| lineColor       | string               | The color of the line drawing (optional parameter).                                               |
-| src             | string               | The image source URL.                                                                             |
-| saveButtonColor | string               | The backbackground color for save button (optional parameter).                                    |
-| undoButtonColor | string               | The backbackground color for save button (optional parameter).                                    |
-| forceSizeExport | boolean              | Whether to force the exported image size to match the canvas size (in the pipeline).              |
-| outputMimeType  | string               | The MIME type of the exported image (e.g., 'image/jpeg', 'image/png') (in the pipeline).          |
-| outputQuality   | number               | The quality of the exported image (0-1) (in the pipeline).                                        |
-| savedImage      | EventEmitter<File>   | An event emitted when the image is saved. The event payload is a data URL representing the image. |
+| Option              | Type                 | Description                                                                                       |
+| ------------------- | -------------------- | ------------------------------------------------------------------------------------------------- |
+| height              | number               | The height of the canvas in pixels.                                                               |
+| width               | number               | The width of the canvas in pixels.                                                                |
+| src                 | string               | The image source URL.                                                                             |
+| saveButtonColor     | string               | The backbackground color for save button (optional parameter).                                    |
+| undoButtonColor     | string               | The backbackground color for save button (optional parameter).                                    |
+| forceSizeExport     | boolean              | Whether to force the exported image size to match the canvas size (in the pipeline).              |
+| outputMimeType      | string               | The MIME type of the exported image (e.g., 'image/jpeg', 'image/png') (in the pipeline).          |
+| outputQuality       | number               | The quality of the exported image (0-1) (in the pipeline).                                        |
+| showColorPicker     | boolean              | Show color picker (optional parameter). True by default.                                          |
+| showlineWidthPicker | boolean              | Show line width picker (optional parameter). True by default.                                     |
+| savedImage          | EventEmitter<File>   | An event emitted when the image is saved. The event payload is a data URL representing the image. |
+
 ```
 
 ## Example
@@ -112,6 +113,8 @@ app.component.html
   [height]="canvasHeight"
   [width]="canvasWidth"
   [src]="uploadImageFilePreview"
+  [showColorPicker]="true"
+  [showlineWidthPicker]="true"
   saveButtonColor="#4caf50"
   undoButtonColor="#f44336"
   (savedImage)="handleSavedImage($event)"

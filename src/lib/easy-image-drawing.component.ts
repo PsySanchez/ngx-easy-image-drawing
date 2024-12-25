@@ -3,36 +3,39 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  Input,
-  Output,
-  EventEmitter,
   OnDestroy,
   OnChanges,
   Renderer2,
   SimpleChanges,
+  output,
+  input,
 } from "@angular/core";
+import { MatSliderModule } from "@angular/material/slider";
 
 @Component({
   selector: "easy-image-drawing",
   standalone: true,
-  imports: [],
+  imports: [MatSliderModule],
   templateUrl: "./easy-image-drawing.component.html",
   styleUrls: ["./easy-image-drawing.component.scss"],
 })
 export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
-  @Input() width: number = 500;
-  @Input() height: number = 500;
-  @Input() lineWidth: number = 7;
-  @Input() lineColor = "#000000";
-  @Input() src = "";
-  @Input() saveButtonColor = "#4caf50";
-  @Input() undoButtonColor = "#f44336";
-  @Output() savedImage = new EventEmitter<File>();
+  width = input<number>(500);
+  height = input<number>(500);
+  src = input<string>("");
+  saveButtonColor = input<string>("#4caf50");
+  undoButtonColor = input<string>("#f44336");
+  showColorPicker = input<boolean>(true);
+  showlineWidthPicker = input<boolean>(true);
+  savedImage = output<File>();
 
   // its important myCanvas matches the variable name in the template
   @ViewChild("drawingCanvas") canvas!: ElementRef<HTMLCanvasElement>;
 
   context!: CanvasRenderingContext2D;
+
+  private lineWidth = 5;
+  private lineColor = "black";
   private previousPosition: { x: number; y: number } = { x: 0, y: 0 };
   private activePath = false;
   private eventListeners: (() => void)[] = [];
@@ -53,16 +56,26 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
   public save(): void {
     const dataUrl = this.canvas.nativeElement.toDataURL("image/png");
     const blob = this._dataURItoBlob(dataUrl);
-    this.savedImage.next(new File([blob], "image.png"));
+    this.savedImage.emit(new File([blob], "image.png"));
   }
 
   public clear(): void {
-    this.context.clearRect(0, 0, this.width, this.height);
+    this.context.clearRect(0, 0, this.width(), this.height());
     const image = new Image();
-    image.src = this.src;
+    image.src = this.src();
     image.onload = () => {
-      this.context.drawImage(image, 0, 0, this.width, this.height);
+      this.context.drawImage(image, 0, 0, this.width(), this.height());
     };
+  }
+
+  public onColorSelected(color: string): void {
+    this.context.strokeStyle = color;
+  }
+
+  public onLineWidthChanged(event: any): void {
+    if (event?.target?.value) {
+      this.context.lineWidth = event.target.value;
+    }
   }
 
   private _dataURItoBlob(dataUrl: string) {
@@ -100,8 +113,8 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
   private _setCanvas(): void {
     if (!this.canvas) return;
 
-    this.canvas.nativeElement.width = this.width;
-    this.canvas.nativeElement.height = this.height;
+    this.canvas.nativeElement.width = this.width();
+    this.canvas.nativeElement.height = this.height();
 
     const context = this.canvas.nativeElement.getContext("2d");
     if (!context) {
@@ -115,9 +128,9 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
 
     // set src to image
     const image = new Image();
-    image.src = this.src;
+    image.src = this.src();
     image.onload = () => {
-      this.context.drawImage(image, 0, 0, this.width, this.height);
+      this.context.drawImage(image, 0, 0, this.width(), this.height());
     };
   }
 

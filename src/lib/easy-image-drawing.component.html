@@ -6,7 +6,7 @@
     type="button"
     (click)="save()"
     class="button save"
-    [style.background-color]="saveButtonColor"
+    [style.background-color]="saveButtonColor()"
   >
     Save
   </button>
@@ -14,8 +14,50 @@
     type="button"
     (click)="clear()"
     class="button undo"
-    [style.background-color]="undoButtonColor"
+    [style.background-color]="undoButtonColor()"
   >
     Undo
   </button>
 </div>
+<!-- color picker -->
+@if(showColorPicker()){
+<div class="color-picker-wrapper">
+  <button
+    class="color-picker"
+    id="black"
+    (click)="onColorSelected('black')"
+  ></button>
+  <button
+    class="color-picker"
+    id="red"
+    (click)="onColorSelected('red')"
+  ></button>
+  <button
+    class="color-picker"
+    id="green"
+    (click)="onColorSelected('green')"
+  ></button>
+  <button
+    class="color-picker"
+    id="blue"
+    (click)="onColorSelected('blue')"
+  ></button>
+  <button
+    class="color-picker"
+    id="yellow"
+    (click)="onColorSelected('yellow')"
+  ></button>
+</div>
+}
+<!-- line width picker -->
+@if(showlineWidthPicker()){
+<div class="line-width-slider">
+  <input
+    type="range"
+    min="5"
+    max="20"
+    value="5"
+    (input)="onLineWidthChanged($event)"
+  />
+</div>
+}
