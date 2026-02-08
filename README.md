@@ -12,6 +12,13 @@ This library provides a simple and efficient way to allow users to draw on image
 npm install ngx-easy-image-drawing
 ```
 
+## Versions
+| Version  | Option                      |
+|----------|-----------------------------|
+| ^0.0.30  | Angular 19.                 |
+| ^0.0.31  | Angular 20.                 |
+
+
 ## Usage
 
 1. Import

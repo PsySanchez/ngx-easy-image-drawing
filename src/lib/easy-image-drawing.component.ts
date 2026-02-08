@@ -13,11 +13,10 @@ import {
 import { MatSliderModule } from "@angular/material/slider";
 
 @Component({
-  selector: "easy-image-drawing",
-  standalone: true,
-  imports: [MatSliderModule],
-  templateUrl: "./easy-image-drawing.component.html",
-  styleUrls: ["./easy-image-drawing.component.scss"],
+    selector: "easy-image-drawing",
+    imports: [MatSliderModule],
+    templateUrl: "./easy-image-drawing.component.html",
+    styleUrls: ["./easy-image-drawing.component.scss"]
 })
 export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
   width = input<number>(500);
