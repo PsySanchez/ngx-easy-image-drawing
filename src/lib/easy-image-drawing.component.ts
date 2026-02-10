@@ -13,10 +13,10 @@ import {
 import { MatSliderModule } from "@angular/material/slider";
 
 @Component({
-    selector: "easy-image-drawing",
-    imports: [MatSliderModule],
-    templateUrl: "./easy-image-drawing.component.html",
-    styleUrls: ["./easy-image-drawing.component.scss"]
+  selector: "easy-image-drawing",
+  imports: [MatSliderModule],
+  templateUrl: "./easy-image-drawing.component.html",
+  styleUrls: ["./easy-image-drawing.component.scss"]
 })
 export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
   width = input<number>(500);
@@ -33,13 +33,13 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
 
   context!: CanvasRenderingContext2D;
 
-  private lineWidth = 5;
-  private lineColor = "black";
-  private previousPosition: { x: number; y: number } = { x: 0, y: 0 };
-  private activePath = false;
-  private eventListeners: (() => void)[] = [];
+  private readonly _lineWidth = 5;
+  private readonly _lineColor = "black";
+  private readonly _eventListeners: (() => void)[] = [];
+  private _previousPosition: { x: number; y: number } = { x: 0, y: 0 };
+  private _activePath = false;
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private readonly _renderer: Renderer2) { }
 
   ngAfterViewInit(): void {
     this._setCanvas();
@@ -83,16 +83,16 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
     const ab = new ArrayBuffer(byteString.length);
     const dw = new DataView(ab);
     for (let i = 0; i < byteString.length; i++) {
-      dw.setUint8(i, byteString.charCodeAt(i));
+      dw.setUint8(i, byteString.codePointAt(i) ?? 0);
     }
     return new Blob([ab], { type: mimeString });
   }
 
   private _drawLine(event: MouseEvent | Touch): void {
     const currentPosition = this.getPosition(event.clientX, event.clientY);
-    this.context.moveTo(this.previousPosition.x, this.previousPosition.y);
+    this.context.moveTo(this._previousPosition.x, this._previousPosition.y);
     this.context.lineTo(currentPosition.x, currentPosition.y);
-    this.previousPosition = currentPosition;
+    this._previousPosition = currentPosition;
     this.context.stroke();
   }
 
@@ -121,8 +121,8 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
       return;
     }
     this.context = context;
-    this.context.lineWidth = this.lineWidth;
-    this.context.strokeStyle = this.lineColor;
+    this.context.lineWidth = this._lineWidth;
+    this.context.strokeStyle = this._lineColor;
     this.context.lineCap = "round";
 
     // set src to image
@@ -134,67 +134,62 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private _setMouseEvents(): void {
-    this.eventListeners.push(
-      this.renderer.listen("window", "mousedown", this._onMouseDown.bind(this)),
-      this.renderer.listen("window", "mousemove", this._onMouseMove.bind(this)),
-      this.renderer.listen("window", "mouseup", this._onMouseUp.bind(this))
+    this._eventListeners.push(
+      this._renderer.listen("window", "mousedown", this._onMouseDown.bind(this)),
+      this._renderer.listen("window", "mousemove", this._onMouseMove.bind(this)),
+      this._renderer.listen("window", "mouseup", this._endPath.bind(this))
     );
   }
 
   private _onMouseDown(event: MouseEvent): void {
-    this.activePath = true;
+    this._activePath = true;
     this.context.beginPath();
-    this.previousPosition = this.getPosition(event.clientX, event.clientY);
+    this._previousPosition = this.getPosition(event.clientX, event.clientY);
   }
 
   private _onMouseMove(event: MouseEvent): void {
-    if (this.activePath) {
+    if (this._activePath) {
       this._drawLine(event);
     }
   }
 
-  private _onMouseUp(): void {
-    if (this.activePath) {
-      this.context.closePath();
-      this.activePath = false;
-    }
-  }
+
 
   private _setMouseEventsMobile(): void {
-    this.eventListeners.push(
-      this.renderer.listen(
+    this._eventListeners.push(
+      this._renderer.listen(
         "window",
         "touchstart",
         this._onTouchStart.bind(this)
       ),
-      this.renderer.listen("window", "touchmove", this._onTouchMove.bind(this)),
-      this.renderer.listen("window", "touchend", this._onTouchEnd.bind(this))
+      this._renderer.listen("window", "touchmove", this._onTouchMove.bind(this)),
+      this._renderer.listen("window", "touchend", this._endPath.bind(this))
     );
   }
 
   private _onTouchStart(event: TouchEvent): void {
-    this.activePath = true;
+    this._activePath = true;
     this.context.beginPath();
-    this.previousPosition = this.getPosition(
+    this._previousPosition = this.getPosition(
       event.touches[0].clientX,
       event.touches[0].clientY
     );
   }
 
   private _onTouchMove(event: TouchEvent): void {
-    if (this.activePath) {
+    if (this._activePath) {
       this._drawLine(event.touches[0]);
     }
   }
 
-  private _onTouchEnd(): void {
-    if (this.activePath) {
+  private _endPath(): void {
+    if (this._activePath) {
       this.context.closePath();
-      this.activePath = false;
+      this._activePath = false;
     }
   }
 
   ngOnDestroy(): void {
-    this.eventListeners.forEach((unlisten) => unlisten());
+    this._eventListeners.forEach((unlisten) => unlisten());
   }
 }

@@ -13,10 +13,11 @@ npm install ngx-easy-image-drawing
 ```
 
 ## Versions
-| Version  | Option                      |
-|----------|-----------------------------|
-| ^0.0.30  | Angular 19.                 |
-| ^0.0.31  | Angular 20.                 |
+| Version  | Option                                          |
+|----------|-------------------------------------------------|
+| ^0.0.30  | Angular 19.                                     |
+| ^0.0.31  | Angular 20.                                     |
+| ^0.1.0   | Added angular support from ^18.0.0 to ^21.0.0   |
 
 
 ## Usage
