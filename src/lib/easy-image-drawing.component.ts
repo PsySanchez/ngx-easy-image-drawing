@@ -9,12 +9,13 @@ import {
   SimpleChanges,
   output,
   input,
+  inject
 } from "@angular/core";
-import { MatSliderModule } from "@angular/material/slider";
 
 @Component({
   selector: "easy-image-drawing",
-  imports: [MatSliderModule],
+  standalone: true,
+  imports: [],
   templateUrl: "./easy-image-drawing.component.html",
   styleUrls: ["./easy-image-drawing.component.scss"]
 })
@@ -38,8 +39,9 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
   private readonly _eventListeners: (() => void)[] = [];
   private _previousPosition: { x: number; y: number } = { x: 0, y: 0 };
   private _activePath = false;
+  private readonly _renderer = inject(Renderer2);
 
-  constructor(private readonly _renderer: Renderer2) { }
+  constructor() { }
 
   ngAfterViewInit(): void {
     this._setCanvas();
@@ -67,8 +69,9 @@ export class EasyImageDrawing implements OnChanges, AfterViewInit, OnDestroy {
     };
   }
 
-  public onColorSelected(color: string): void {
-    this.context.strokeStyle = color;
+  onColorSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.context.strokeStyle = input.value;
   }
 
   public onLineWidthChanged(event: any): void {

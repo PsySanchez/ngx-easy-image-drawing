@@ -58,22 +58,32 @@ button {
   margin: 0 5px;
 }
 
-#black {
-  background-color: black;
+.color-picker-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: sans-serif;
 }
 
-#red {
-  background-color: red;
+.rgb-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
-#green {
-  background-color: green;
+.rgb-input::-webkit-color-swatch {
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#blue {
-  background-color: blue;
-}
-
-#yellow {
-  background-color: yellow;
+.rgb-input::-moz-color-swatch {
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
