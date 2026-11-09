@@ -1,8 +1,17 @@
 {
   "name": "ngx-easy-image-drawing",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "Alex Voronin <alex.varonin@gmail.com>",
   "license": "MIT",
+    "keywords": [
+    "angular",
+    "standalone",
+    "canvas",
+    "drawing",
+    "image",
+    "paint",
+    "ngx-easy-image-drawing"
+  ],
   "scripts": {
     "build": "ng-packagr -p ng-package.json"
   },
